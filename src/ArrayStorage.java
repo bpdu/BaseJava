@@ -25,24 +25,26 @@ public class ArrayStorage {
         Resume res = null;
         int i = 0;
         while (i < index && res == null) {
-            res = storage[i].toString().equals(uuid) ? storage[i] : null;
+            res = storage[i].toString().equals(uuid) ? storage[i] : res;
             i++;
         }
         return res;
     }
 
     void delete(String uuid) {
-        int notNullIndex = index;
-        int i = 0;
-        do {
-            Resume res = storage[i];
-            if (res.toString().equals(uuid) || res == null ) {
+        //Delete an element
+        for (int i = 0; i < index; i++) {
+            storage[i] = storage[i].toString().equals(uuid) ? null : storage[i];
+        }
+        //Rearrange array removing null elements
+        int non_null_index=index;
+        for (int i = 0; i < index - 1; i++) {
+            if (storage[i] == null) {
                 storage[i] = storage[i + 1];
-                notNullIndex--;
+                non_null_index--;
             }
-            i++;
-        } while (i < index);
-        index = notNullIndex;
+        }
+        index=non_null_index;
     }
 
     /**
