@@ -36,7 +36,7 @@ public class ArrayStorage {
         int i = 0;
         do {
             Resume res = storage[i];
-            if (res.toString().equals(uuid) || res == null ) {
+            if (res.toString().equals(uuid) || res == null) {
                 storage[i] = storage[i + 1];
                 notNullIndex--;
             }
