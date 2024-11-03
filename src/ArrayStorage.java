@@ -3,19 +3,19 @@
  */
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
-    int index = 0;
+    int size = 0;
 
     void clear() {
-        for (int i = 0; i < index; i++) {
+        for (int i = 0; i < size; i++) {
             storage[i] = null;
-            index = 0;
+            size = 0;
         }
     }
 
     void save(Resume r) {
-        if (index < 10000) {
-            storage[index] = r;
-            index++;
+        if (size < 10000) {
+            storage[size] = r;
+            size++;
         } else {
             System.out.println("Storage is full");
         }
@@ -24,7 +24,7 @@ public class ArrayStorage {
     Resume get(String uuid) {
         Resume res = null;
         int i = 0;
-        while (i < index && res == null) {
+        while (i < size && res == null) {
             res = storage[i].toString().equals(uuid) ? storage[i] : null;
             i++;
         }
@@ -32,7 +32,7 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        int notNullIndex = index;
+        int notNullIndex = size;
         int i = 0;
         do {
             Resume res = storage[i];
@@ -41,20 +41,20 @@ public class ArrayStorage {
                 notNullIndex--;
             }
             i++;
-        } while (i < index);
-        index = notNullIndex;
+        } while (i < size);
+        size = notNullIndex;
     }
 
     /**
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        Resume[] arr = new Resume[index];
-        System.arraycopy(storage, 0, arr, 0, index);
-        return arr;
+        Resume[] resumes = new Resume[size];
+        System.arraycopy(storage, 0, resumes, 0, size);
+        return resumes;
     }
 
     int size() {
-        return index;
+        return size;
     }
 }
