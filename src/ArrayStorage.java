@@ -14,35 +14,30 @@ public class ArrayStorage {
 
     void save(Resume r) {
         if (size < 10000) {
-            storage[size] = r;
-            size++;
+            storage[size++] = r;
         } else {
             System.out.println("Storage is full");
         }
     }
 
     Resume get(String uuid) {
-        Resume res = null;
-        int i = 0;
-        while (i < size && res == null) {
-            res = storage[i].toString().equals(uuid) ? storage[i] : null;
-            i++;
+        for (int i = 0; i < size; i++) {
+            if (storage[i].toString().equals(uuid)) {
+                return storage[i];
+            }
         }
-        return res;
+        return null;
     }
 
     void delete(String uuid) {
-        int notNullIndex = size;
-        int i = 0;
-        do {
-            Resume res = storage[i];
-            if (res.toString().equals(uuid) || res == null) {
-                storage[i] = storage[i + 1];
-                notNullIndex--;
+        int notDeletedCount = size;
+        for (int i = 0; i < size; i++) {
+            if (storage[i].toString().equals(uuid)) {
+                storage[i] = storage[notDeletedCount - 1];
+                notDeletedCount--;
             }
-            i++;
-        } while (i < size);
-        size = notNullIndex;
+        }
+        size = notDeletedCount;
     }
 
     /**
