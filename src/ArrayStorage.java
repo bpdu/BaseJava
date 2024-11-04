@@ -33,8 +33,7 @@ public class ArrayStorage {
         int notDeletedCount = size;
         for (int i = 0; i < size; i++) {
             if (storage[i].toString().equals(uuid)) {
-                storage[i] = storage[notDeletedCount - 1];
-                notDeletedCount--;
+                storage[i] = storage[notDeletedCount-- - 1];
             }
         }
         size = notDeletedCount;
