@@ -1,7 +1,7 @@
 ## Lesson 1 Review ##
 
 ### Review 1 ###
-- Resume[] arr можно назвать resumes или allResume 
+- ru.bpdu.basejava.model.Resume[] arr можно назвать resumes или allResume 
 - для реализации методов удобней использовать for, чем while или do-while
 - в clear() достаточно обнулить index = 0; один раз 
 - строки можно объединить

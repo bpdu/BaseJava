@@ -53,4 +53,8 @@ public class ArrayStorage {
     public int size() {
         return size;
     }
+
+    public Resume update(Resume resume) {
+        return new Resume(resume.getUuid());
+    }
 }
