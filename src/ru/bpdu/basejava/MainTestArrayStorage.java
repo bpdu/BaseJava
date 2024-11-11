@@ -30,6 +30,12 @@ public class MainTestArrayStorage {
         printAll();
 
         System.out.println("Size: " + ARRAY_STORAGE.size());
+
+        ARRAY_STORAGE.save(r1);
+        System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
+        ARRAY_STORAGE.update(r1);
+        System.out.println("Get updated r1: " + ARRAY_STORAGE.get(r1.getUuid()));
+
     }
 
     static void printAll() {

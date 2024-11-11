@@ -9,6 +9,15 @@ public class ArrayStorage {
     private final Resume[] storage = new Resume[10000];
     private int size = 0;
 
+    public boolean isResumeExist(Resume resume) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i].getUuid().equals(resume.getUuid())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void clear() {
         for (int i = 0; i < size; i++) {
             storage[i] = null;
@@ -17,10 +26,12 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        if (size < 10000) {
-            storage[size++] = r;
+        if (isResumeExist(r)) {
+            System.out.printf("Error saving resume with uuid %s: Resume already exists", r.getUuid());
+        } else if (size >= storage.length - 1) {
+            System.out.printf("Error saving resume with uuid %s: Array is full", r.getUuid());
         } else {
-            System.out.println("Storage is full");
+            storage[size++] = r;
         }
     }
 
