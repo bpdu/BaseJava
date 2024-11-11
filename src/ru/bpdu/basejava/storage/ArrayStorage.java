@@ -41,14 +41,20 @@ public class ArrayStorage {
                 return storage[i];
             }
         }
+        System.out.printf("Error getting resume with uuid %s: Resume not found", uuid);
         return null;
     }
 
     public void delete(String uuid) {
+        boolean isFound = false;
         for (int i = 0; i < size; i++) {
             if (storage[i].toString().equals(uuid)) {
                 storage[i] = storage[size-- - 1];
+                isFound = true;
             }
+        }
+        if (!isFound) {
+            System.out.printf("Error deleting resume with uuid %s: Resume not found", uuid);
         }
     }
 
@@ -66,6 +72,11 @@ public class ArrayStorage {
     }
 
     public Resume update(Resume resume) {
-        return new Resume(resume.getUuid());
+        if (isResumeExist(resume)) {
+            return new Resume(resume.getUuid());
+        } else {
+            System.out.printf("Error updating resume with uuid %s: Resume doesn't exist", resume.getUuid());
+            return null;
+        }
     }
 }
