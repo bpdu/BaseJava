@@ -2,6 +2,8 @@ package ru.bpdu.basejava.storage;
 
 import ru.bpdu.basejava.model.Resume;
 
+import java.util.Arrays;
+
 /**
  * Array based storage for Resumes
  */
@@ -9,9 +11,9 @@ public class ArrayStorage {
     private final Resume[] storage = new Resume[10000];
     private int size = 0;
 
-    public boolean isResumeExist(Resume resume) {
+    public boolean isResumeExist(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(resume.getUuid())) {
+            if (storage[i].getUuid().equals(uuid)) {
                 return true;
             }
         }
@@ -19,14 +21,12 @@ public class ArrayStorage {
     }
 
     public void clear() {
-        for (int i = 0; i < size; i++) {
-            storage[i] = null;
-        }
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
     public void save(Resume r) {
-        if (isResumeExist(r)) {
+        if (isResumeExist(r.getUuid())) {
             System.out.printf("Error saving resume with uuid %s: Resume already exists", r.getUuid());
         } else if (size >= storage.length - 1) {
             System.out.printf("Error saving resume with uuid %s: Array is full", r.getUuid());
@@ -71,11 +71,12 @@ public class ArrayStorage {
         return size;
     }
 
-    public Resume update(Resume resume) {
-        if (isResumeExist(resume)) {
-            return new Resume(resume.getUuid());
+    public Resume update(String uuid, Resume resume) {
+        if (isResumeExist(uuid)) {
+            resume.setUuid(uuid);
+            return resume;
         } else {
-            System.out.printf("Error updating resume with uuid %s: Resume doesn't exist", resume.getUuid());
+            System.out.printf("Error updating resume with uuid %s: Resume doesn't exist", uuid);
             return null;
         }
     }
