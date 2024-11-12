@@ -23,7 +23,7 @@ public class MainTestArrayStorage {
 
         System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
 
-        System.out.println("Update r1 with r3 and get r1 : " + ARRAY_STORAGE.update(r1.getUuid(), r3).getUuid());
+        System.out.println("Update r3 using r1 data and get r3 : " + ARRAY_STORAGE.update(r3.getUuid(), r1).getUuid());
 
         printAll();
         ARRAY_STORAGE.delete(r1.getUuid());
