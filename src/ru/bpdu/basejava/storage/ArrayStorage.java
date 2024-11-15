@@ -68,5 +68,7 @@ public class ArrayStorage {
         }
     }
 
-
+    protected int getIndex(String uuid) {
+        return Arrays.binarySearch(storage, new Resume(uuid));
+    }
 }
