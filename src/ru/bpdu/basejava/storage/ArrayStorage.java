@@ -18,7 +18,7 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        if (size >= storage.length - 1) {
+        if (size >= STORAGE_LIMIT - 1) {
             System.out.printf("Error saving resume with uuid '%s': Array is full\n", r.getUuid());
         } else if (size > 0 && Arrays.stream(storage).limit(size).anyMatch(resume -> resume.getUuid().equals(r.getUuid()))) {
             System.out.printf("Error saving resume with uuid '%s': Resume already exists\n", r.getUuid());
