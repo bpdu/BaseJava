@@ -18,18 +18,20 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        if (size >= STORAGE_LIMIT - 1) {
+        int index = size;
+        if (index >= STORAGE_LIMIT - 1) {
             System.out.printf("Error saving resume with uuid '%s': Array is full\n", r.getUuid());
-        } else if (size > 0 && Arrays.stream(storage).limit(size).anyMatch(resume -> resume.getUuid().equals(r.getUuid()))) {
+        } else if (index > 0 && Arrays.stream(storage).limit(size).anyMatch(resume -> resume.getUuid().equals(r.getUuid()))) {
             System.out.printf("Error saving resume with uuid '%s': Resume already exists\n", r.getUuid());
         } else {
-            storage[size++] = r;
-
+            storage[index++] = r;
         }
+        size = index;
     }
 
     public Resume get(String uuid) {
-        Resume resume = Arrays.stream(storage).limit(size).filter(r -> r.getUuid().equals(uuid)).findFirst().orElse(null);
+        int index = size;
+        Resume resume = Arrays.stream(storage).limit(index).filter(r -> r.getUuid().equals(uuid)).findFirst().orElse(null);
         if (resume == null) {
             System.out.printf("Error getting resume with uuid '%s': Resume not found\n", uuid);
         }
@@ -37,13 +39,15 @@ public class ArrayStorage {
     }
 
     public void delete(String uuid) {
-        if (Arrays.stream(storage).limit(size).noneMatch(resume -> resume.getUuid().equals(uuid))) {
+        int index = size;
+        if (Arrays.stream(storage).limit(index).noneMatch(resume -> resume.getUuid().equals(uuid))) {
             System.out.printf("Error deleting resume with uuid '%s': Resume not found\n", uuid);
         } else {
             for (int i = 0; i < size; i++) {
-                storage[i] = storage[i].toString().equals(uuid) ? storage[size-- - 1] : storage[i];
+                storage[i] = storage[i].getUuid().equals(uuid) ? storage[index-- - 1] : storage[i];
             }
         }
+        size = index;
     }
 
     /**
@@ -58,13 +62,12 @@ public class ArrayStorage {
     }
 
     public Resume update(String uuid, Resume r) {
-        if (Arrays.stream(storage).limit(size).noneMatch(resume -> resume.getUuid().equals(uuid))) {
+        int index = size;
+        if (Arrays.stream(storage).limit(index).anyMatch(resume -> resume.getUuid().equals(uuid))) {
+            return r;
+        } else {
             System.out.printf("Error updating resume with uuid '%s': Resume not found\n", uuid);
             return null;
-        } else {
-            Resume resume = get(uuid);
-            resume.setUuid(r.getUuid());
-            return resume;
         }
     }
 
