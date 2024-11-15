@@ -64,7 +64,7 @@ public class ArrayStorage {
     public Resume update(String uuid, Resume r) {
         int index = size;
         if (Arrays.stream(storage).limit(index).anyMatch(resume -> resume.getUuid().equals(uuid))) {
-            return r;
+            return new Resume(r.getUuid());
         } else {
             System.out.printf("Error updating resume with uuid '%s': Resume not found\n", uuid);
             return null;
