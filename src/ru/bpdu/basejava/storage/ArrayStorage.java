@@ -3,6 +3,7 @@ package ru.bpdu.basejava.storage;
 import ru.bpdu.basejava.model.Resume;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 /**
  * Array based storage for Resumes
@@ -72,6 +73,10 @@ public class ArrayStorage {
     }
 
     protected int getIndex(String uuid) {
-        return Arrays.binarySearch(storage, new Resume(uuid));
+        int index = size;
+        return IntStream.range(0, index - 1)
+                .filter(i -> storage[i].getUuid().equals(uuid))
+                .findFirst()
+                .orElse(-1);
     }
 }
