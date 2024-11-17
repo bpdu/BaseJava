@@ -22,7 +22,7 @@ public class ArrayStorage {
         int index = size;
         if (index >= STORAGE_LIMIT - 1) {
             System.out.printf("Error saving resume with uuid '%s': Array is full\n", r.getUuid());
-        } else if (index > 0 && Arrays.stream(storage).limit(size).anyMatch(resume -> resume.getUuid().equals(r.getUuid()))) {
+        } else if ((index > 0) && (getIndex(r.getUuid()) > 0)) {
             System.out.printf("Error saving resume with uuid '%s': Resume already exists\n", r.getUuid());
         } else {
             storage[index++] = r;
