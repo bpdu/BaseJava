@@ -31,20 +31,21 @@ public class ArrayStorage {
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
-        if (index > 0 ) {
-            return storage[index];
-        } else {
+        if (index == -1) {
             System.out.printf("Error getting resume with uuid '%s': Resume not found\n", uuid);
             return null;
+        } else {
+            return storage[index];
         }
     }
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
-        if (index > 0) {
-            storage[index] = storage[size-- - 1];
-        } else {
+        if (index == -1) {
             System.out.printf("Error deleting resume with uuid '%s': Resume not found\n", uuid);
+        } else {
+            storage[index] = storage[--size];
+            storage[size] = null;
         }
     }
 
@@ -61,17 +62,17 @@ public class ArrayStorage {
 
     public Resume update(String uuid, Resume r) {
         int index = getIndex(uuid);
-        if (index > 0) {
-            storage[index] = r;
-            return storage[index];
-        } else {
+        if (index == -1) {
             System.out.printf("Error updating resume with uuid '%s': Resume not found\n", uuid);
             return null;
+        } else {
+            storage[index] = r;
+            return storage[index];
         }
     }
 
     protected int getIndex(String uuid) {
-        return IntStream.range(0, size - 1)
+        return IntStream.range(0, size)
                 .filter(i -> storage[i].getUuid().equals(uuid))
                 .findFirst()
                 .orElse(-1);
