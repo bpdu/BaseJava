@@ -72,9 +72,6 @@ public class ArrayStorage {
     }
 
     protected int getIndex(String uuid) {
-        return IntStream.range(0, size)
-                .filter(i -> storage[i].getUuid().equals(uuid))
-                .findFirst()
-                .orElse(-1);
+        return IntStream.range(0, size).filter(i -> storage[i].getUuid().equals(uuid)).findFirst().orElse(-1);
     }
 }
