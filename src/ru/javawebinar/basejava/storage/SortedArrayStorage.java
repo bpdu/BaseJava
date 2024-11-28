@@ -21,7 +21,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         }
     }
 
-    //TODO: change to get sorted
     @Override
     public void save(Resume r) {
         if (getIndex(r.getUuid()) != -1) {
@@ -29,7 +28,11 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         } else if (size >= STORAGE_LIMIT) {
             System.out.println("Storage overflow");
         } else {
-            storage[size] = r;
+            int indexInsert = -(Arrays.binarySearch(storage, r) + 1);
+            for (int i = indexInsert; i <= size; i++) {
+                storage[i + 1] = storage[i];
+            }
+            storage[indexInsert] = r;
             size++;
         }
     }
