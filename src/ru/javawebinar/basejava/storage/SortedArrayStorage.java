@@ -23,12 +23,12 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     public void save(Resume r) {
-        if (getIndex(r.getUuid()) != -1) {
+        if (getIndex(r.getUuid()) >= 0) {
             System.out.println("Resume " + r.getUuid() + " already exist");
         } else if (size >= STORAGE_LIMIT) {
             System.out.println("Storage overflow");
         } else {
-            int indexInsert = -(Arrays.binarySearch(storage, r) + 1);
+            int indexInsert = -(1 + Arrays.binarySearch(storage, 0, size, r));
             for (int i = indexInsert; i <= size; i++) {
                 storage[i + 1] = storage[i];
             }
